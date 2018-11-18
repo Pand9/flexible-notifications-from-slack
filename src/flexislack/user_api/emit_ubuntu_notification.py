@@ -3,8 +3,12 @@ Wraps 'notify-send' on ubuntu
 """
 import subprocess
 
-def _print_stdout(msg):
-    print(msg, flush=True)
+def emit_notification(title, message):
+    # noinspection PyArgumentList
+    p = subprocess.run(["notify-send", "--urgency=critical", title, message], capture_output=True, text=True)
+    if p.returncode:
+        _log_cmd_status(p)
+    p.check_returncode()
 
 
 def _log_cmd_status(p, stdin=None):
@@ -22,9 +26,5 @@ def _log_cmd_status(p, stdin=None):
     _print_stdout("-End-")
 
 
-def emit_notification(title, message):
-    # noinspection PyArgumentList
-    p = subprocess.run(["notify-send", "--urgency=critical", title, message], capture_output=True, text=True)
-    if p.returncode:
-        _log_cmd_status(p)
-    p.check_returncode()
+def _print_stdout(msg):
+    print(msg, flush=True)

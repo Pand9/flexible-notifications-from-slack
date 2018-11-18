@@ -1,3 +1,4 @@
+import datetime
 from functools import lru_cache
 
 import slackclient
@@ -21,14 +22,9 @@ class UserMap:
 
 
 class ApiWrapper:
-    def __init__(self):
-        token = open("/home/ks/a/flexible-notifications-from-slack/workspaces/default/secret.txt", "r").read()
-        self._slackclient = slackclient.SlackClient(token)
-
-    @property
-    @lru_cache(1)
-    def users(self):
-        return None
+    def __init__(self, secret):
+        self._slackclient = slackclient.SlackClient(secret
+                                                    )
 
     def api_call(self, *a, **kw):
         resp = self._slackclient.api_call(*a, **kw)
@@ -36,7 +32,30 @@ class ApiWrapper:
             raise Exception("not ok")
         return resp
 
+    def get_messages(self, channel_id: str, from_ts: datetime.datetime):
+        return []
+
     @property
-    @lru_cache(1)
-    def user_map(self):
+    @lru_cache
+    def channels(self):
+        pass
+
+    @property
+    @lru_cache
+    def channel_id_to_name(self):
+        pass
+
+    @property
+    @lru_cache
+    def channel_name_to_id(self):
+        pass
+
+    @property
+    @lru_cache
+    def users(self):
+        return None
+
+    @property
+    @lru_cache
+    def user_map(self) -> UserMap:
         return UserMap({u["id"]: u["name"] for u in self.users["members"]})

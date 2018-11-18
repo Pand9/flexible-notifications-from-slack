@@ -1,21 +1,9 @@
 #!/usr/bin/env python3.7
-import sys
-import argparse
-import logging
-from dataclasses import dataclass
-from functools import lru_cache
-from typing import List, Union
 
-import slackclient
-import json
 import datetime
 
-from flexislack.datatypes import Message, SlackInstance, Channel
-from flexislack.event_handler import SimpleEventHandler
-from flexislack.notification import emit_notification
-
-
-
+from flexislack.user_api.message_type import Message, SlackInstance, Channel
+from flexislack.simple_event_handler import SimpleEventHandler
 
 
 def main():
