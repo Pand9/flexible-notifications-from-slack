@@ -1,0 +1,3 @@
+[submodule "src/deps/pid"]
+	path = src/deps/pid
+	url = https://github.com/trbs/pid.git

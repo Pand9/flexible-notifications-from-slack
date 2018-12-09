@@ -1,13 +1,13 @@
-from typing import Union
+from typing import Union, List
 
-from flexislack.user_api.emit_ubuntu_notification import emit_notification
-from flexislack.user_api.event_handler_interface import EventHandler
-from flexislack.user_api.message_type import Message, PrivateConversation, GroupConversation, Channel
-
+from slack_notifications.user_api.emit_ubuntu_notification import emit_notification
+from slack_notifications.user_api.event_handler_interface import EventHandler
+from slack_notifications.user_api.message_type import Message, PrivateConversation, GroupConversation, Channel, Conversation
 
 class SimpleEventHandler(EventHandler):
-    def handle(self, message: Message):
-        emit_notification("Message from slack", self.common_format(message))
+    def handle(self, conversation: Conversation, messages: List[Message]):
+        if not isinstance(conversation, Channel) or any("<@U971CT4Q1>" in m.text for m in messages):
+            emit_notification("%d messages on %s" % (len(messages), conversation), self.common_format(messages[-1]))
 
     @staticmethod
     def limit_line(line, limit):

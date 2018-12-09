@@ -23,10 +23,12 @@ class Channel:
 class GroupConversation:
     members: List[str]
 
+Conversation = Union[PrivateConversation, GroupConversation, Channel]
+
 @dataclass
 class Message:
     slack_instance: SlackInstance
-    conversation: Union[PrivateConversation, GroupConversation, Channel]
+    conversation: Conversation
     author: str
     text: str
     created: datetime.datetime
